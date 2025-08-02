@@ -92,13 +92,13 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       this.isLoading = true;
       const formValue = this.registerForm.value;
-      
+
       // Map form values to RegisterData interface
       const registerData: RegisterData = {
         firstName: formValue.firstName,
         lastName: formValue.lastName,
         email: formValue.email,
-        password: formValue.password
+        password: formValue.password,
       };
 
       this.authService.register(registerData).subscribe({
@@ -111,7 +111,7 @@ export class RegisterComponent {
           this.isLoading = false;
           console.error('Registration failed', error);
           // TODO: Show error message to user
-        }
+        },
       });
     }
   }
