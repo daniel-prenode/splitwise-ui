@@ -7,10 +7,10 @@
     <span class="spacer"></span>
     <span
       class="user-info me-3"
-      *ngIf="currentUser"
+      *ngIf="currentUser()"
       i18n="@@dashboard.welcome.user"
     >
-      Welcome, {{ currentUser.firstName }} {{ currentUser.lastName }}!
+      Welcome, {{ displayName() }}!
     </span>
     <button
       mat-icon-button

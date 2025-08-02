@@ -1,6 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import {
+  computed,
+  Injectable,
+  signal,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
@@ -44,8 +50,23 @@ export class AuthService {
   private readonly TOKEN_KEY = 'authToken';
   private readonly USER_KEY = 'currentUser';
 
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
-  public currentUser$ = this.currentUserSubject.asObservable();
+  private _currentUser$: WritableSignal<User | null> = signal(null);
+  public currentUser$: Signal<User | null> = this._currentUser$.asReadonly();
+  public isAuthenticated$: Signal<boolean> = computed(() => {
+    const user = this._currentUser$();
+    if (!user) return false;
+
+    const token = localStorage.getItem(this.TOKEN_KEY);
+    if (!token) return false;
+
+    // Check if token is expired (basic check)
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.exp * 1000 > Date.now();
+    } catch {
+      return false;
+    }
+  });
 
   constructor(private http: HttpClient) {
     // Check if user is already logged in from localStorage
@@ -53,7 +74,7 @@ export class AuthService {
     const savedToken = localStorage.getItem(this.TOKEN_KEY);
 
     if (savedUser && savedToken) {
-      this.currentUserSubject.next(JSON.parse(savedUser));
+      this._currentUser$.set(JSON.parse(savedUser));
     }
   }
 
@@ -94,26 +115,13 @@ export class AuthService {
   }
 
   logout(): void {
-    this.currentUserSubject.next(null);
+    this._currentUser$.set(null);
     localStorage.removeItem(this.USER_KEY);
     localStorage.removeItem(this.TOKEN_KEY);
   }
 
-  isAuthenticated(): boolean {
-    const token = localStorage.getItem(this.TOKEN_KEY);
-    if (!token) return false;
-
-    // Check if token is expired (basic check)
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.exp * 1000 > Date.now();
-    } catch {
-      return false;
-    }
-  }
-
   getCurrentUser(): User | null {
-    return this.currentUserSubject.value;
+    return this._currentUser$();
   }
 
   getAuthToken(): string | null {
@@ -121,7 +129,7 @@ export class AuthService {
   }
 
   private setAuthData(user: User, token: string): void {
-    this.currentUserSubject.next(user);
+    this._currentUser$.set(user);
     localStorage.setItem(this.USER_KEY, JSON.stringify(user));
     localStorage.setItem(this.TOKEN_KEY, token);
   }

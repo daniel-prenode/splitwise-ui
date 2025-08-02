@@ -12,7 +12,7 @@ import { AuthService } from '../../core/services/auth.service';
         <p>Redirecting...</p>
       </div>
     </div>
-  `
+  `,
 })
 export class LandingComponent implements OnInit {
   constructor(
@@ -21,7 +21,7 @@ export class LandingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.authService.isAuthenticated()) {
+    if (this.authService.isAuthenticated$()) {
       this.router.navigate(['/dashboard']);
     } else {
       this.router.navigate(['/login']);

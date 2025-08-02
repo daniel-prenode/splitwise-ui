@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { Component, Signal, computed } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { AuthService, User } from '../../core/services/auth.service';
@@ -22,18 +22,20 @@ import { AuthService, User } from '../../core/services/auth.service';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent implements OnInit {
-  currentUser: User | null = null;
-
+export class DashboardComponent {
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.currentUser = this.authService.getCurrentUser();
-    this.authService.currentUser$.subscribe((user) => {
-      this.currentUser = user;
+  get currentUser(): Signal<User | null> {
+    return this.authService.currentUser$;
+  }
+
+  get displayName(): Signal<string> {
+    return computed(() => {
+      const user = this.currentUser();
+      return user ? `${user.firstName} ${user.lastName}` : '';
     });
   }
 
