@@ -1,0 +1,119 @@
+{
+  "login": {
+    "welcome": {
+      "title": "Willkommen zurück",
+      "subtitle": "Melden Sie sich in Ihrem Konto an"
+    },
+    "email": {
+      "label": "E-Mail",
+      "placeholder": "Geben Sie Ihre E-Mail ein",
+      "required": "E-Mail ist erforderlich",
+      "invalid": "Bitte geben Sie eine gültige E-Mail ein"
+    },
+    "password": {
+      "label": "Passwort",
+      "placeholder": "Geben Sie Ihr Passwort ein",
+      "required": "Passwort ist erforderlich",
+      "minlength": "Passwort muss mindestens 6 Zeichen lang sein"
+    },
+    "signin": {
+      "button": "Anmelden",
+      "progress": "Anmeldung läuft..."
+    },
+    "forgot": {
+      "password": "Passwort vergessen?"
+    },
+    "no": {
+      "account": "Noch kein Konto? "
+    },
+    "signup": {
+      "link": "Registrieren"
+    }
+  },
+  "register": {
+    "title": "Konto erstellen",
+    "subtitle": "Werden Sie heute Mitglied",
+    "firstname": {
+      "label": "Vorname",
+      "placeholder": "Geben Sie Ihren Vornamen ein",
+      "required": "Vorname ist erforderlich",
+      "minlength": "Vorname muss mindestens 2 Zeichen lang sein"
+    },
+    "lastname": {
+      "label": "Nachname",
+      "placeholder": "Geben Sie Ihren Nachnamen ein",
+      "required": "Nachname ist erforderlich",
+      "minlength": "Nachname muss mindestens 2 Zeichen lang sein"
+    },
+    "email": {
+      "label": "E-Mail",
+      "placeholder": "Geben Sie Ihre E-Mail ein",
+      "required": "E-Mail ist erforderlich",
+      "invalid": "Bitte geben Sie eine gültige E-Mail ein"
+    },
+    "password": {
+      "label": "Passwort",
+      "placeholder": "Erstellen Sie ein Passwort",
+      "required": "Passwort ist erforderlich",
+      "minlength": "Passwort muss mindestens 6 Zeichen lang sein"
+    },
+    "confirm": {
+      "password": {
+        "label": "Passwort bestätigen",
+        "placeholder": "Bestätigen Sie Ihr Passwort",
+        "required": "Bitte bestätigen Sie Ihr Passwort",
+        "mismatch": "Passwörter stimmen nicht überein"
+      }
+    },
+    "create": {
+      "account": "Konto erstellen"
+    },
+    "creating": {
+      "account": "Konto wird erstellt..."
+    },
+    "have": {
+      "account": "Bereits ein Konto? "
+    },
+    "signin": {
+      "link": "Anmelden"
+    }
+  },
+  "dashboard": {
+    "app": {
+      "name": "Splitwise"
+    },
+    "welcome": {
+      "user": "Willkommen, {firstName}!",
+      "title": "Willkommen bei Splitwise!",
+      "subtitle": "Verwalten Sie Ihre Ausgaben und teilen Sie Rechnungen mit Freunden und Familie."
+    },
+    "logout": "Abmelden",
+    "groups": {
+      "title": "Gruppen",
+      "subtitle": "Verwalten Sie Ihre Ausgabengruppen",
+      "description": "Erstellen und verwalten Sie Gruppen, um Ausgaben mit Freunden, Mitbewohnern oder Reisebegleitern zu teilen.",
+      "button": "Gruppen anzeigen"
+    },
+    "expenses": {
+      "title": "Ausgaben",
+      "subtitle": "Verfolgen Sie Ihre Ausgaben",
+      "description": "Fügen Sie Ausgaben hinzu und verfolgen Sie sie, teilen Sie Rechnungen fair auf und behalten Sie den Überblick darüber, wer was schuldet.",
+      "button": "Ausgabe hinzufügen"
+    },
+    "balances": {
+      "title": "Salden",
+      "subtitle": "Überprüfen Sie Ihre Salden",
+      "description": "Sehen Sie, wie viel Sie schulden oder Ihnen von jeder Person in Ihren Gruppen geschuldet wird.",
+      "button": "Salden anzeigen"
+    },
+    "summary": {
+      "title": "Schnelle Übersicht",
+      "owed": "Ihnen wird geschuldet",
+      "owe": "Sie schulden",
+      "total": "Gesamtausgaben"
+    }
+  },
+  "common": {
+    "currency": "0,00 €"
+  }
+}

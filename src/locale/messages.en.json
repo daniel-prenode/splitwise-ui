@@ -1,0 +1,119 @@
+{
+  "login": {
+    "welcome": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to your account"
+    },
+    "email": {
+      "label": "Email",
+      "placeholder": "Enter your email",
+      "required": "Email is required",
+      "invalid": "Please enter a valid email"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Enter your password",
+      "required": "Password is required",
+      "minlength": "Password must be at least 6 characters"
+    },
+    "signin": {
+      "button": "Sign In",
+      "progress": "Signing In..."
+    },
+    "forgot": {
+      "password": "Forgot your password?"
+    },
+    "no": {
+      "account": "Don't have an account? "
+    },
+    "signup": {
+      "link": "Sign up"
+    }
+  },
+  "register": {
+    "title": "Create Account",
+    "subtitle": "Join us today",
+    "firstname": {
+      "label": "First Name",
+      "placeholder": "Enter your first name",
+      "required": "First name is required",
+      "minlength": "First name must be at least 2 characters"
+    },
+    "lastname": {
+      "label": "Last Name",
+      "placeholder": "Enter your last name",
+      "required": "Last name is required",
+      "minlength": "Last name must be at least 2 characters"
+    },
+    "email": {
+      "label": "Email",
+      "placeholder": "Enter your email",
+      "required": "Email is required",
+      "invalid": "Please enter a valid email"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Create a password",
+      "required": "Password is required",
+      "minlength": "Password must be at least 6 characters"
+    },
+    "confirm": {
+      "password": {
+        "label": "Confirm Password",
+        "placeholder": "Confirm your password",
+        "required": "Please confirm your password",
+        "mismatch": "Passwords do not match"
+      }
+    },
+    "create": {
+      "account": "Create Account"
+    },
+    "creating": {
+      "account": "Creating Account..."
+    },
+    "have": {
+      "account": "Already have an account? "
+    },
+    "signin": {
+      "link": "Sign in"
+    }
+  },
+  "dashboard": {
+    "app": {
+      "name": "Splitwise"
+    },
+    "welcome": {
+      "user": "Welcome, {firstName}!",
+      "title": "Welcome to Splitwise!",
+      "subtitle": "Manage your expenses and split bills with friends and family."
+    },
+    "logout": "Logout",
+    "groups": {
+      "title": "Groups",
+      "subtitle": "Manage your expense groups",
+      "description": "Create and manage groups to split expenses with friends, roommates, or travel companions.",
+      "button": "View Groups"
+    },
+    "expenses": {
+      "title": "Expenses",
+      "subtitle": "Track your expenses",
+      "description": "Add and track expenses, split bills fairly, and keep track of who owes what.",
+      "button": "Add Expense"
+    },
+    "balances": {
+      "title": "Balances",
+      "subtitle": "Check your balances",
+      "description": "See how much you owe or are owed by each person in your groups.",
+      "button": "View Balances"
+    },
+    "summary": {
+      "title": "Quick Summary",
+      "owed": "You are owed",
+      "owe": "You owe",
+      "total": "Total expenses"
+    }
+  },
+  "common": {
+    "currency": "$0.00"
+  }
+}
