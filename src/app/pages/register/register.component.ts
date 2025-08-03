@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -13,11 +13,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterModule } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   AuthService,
   RegisterData,
   User,
-} from '../../../core/services/auth.service';
+} from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -32,30 +33,35 @@ import {
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    TranslateModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
+  private readonly fb = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly translateService = inject(TranslateService);
+
+  // Signal-basierte Properties
+  readonly isLoading$ = signal(false);
+  readonly hidePassword$ = signal(true);
+  readonly hideConfirmPassword$ = signal(true);
+  readonly errorMessage$ = signal<string | null>(null);
+
   registerForm: FormGroup;
-  isLoading = false;
-  hidePassword = true;
-  hideConfirmPassword = true;
 
-  // Translation strings
-  firstNamePlaceholder = $localize`:@@register.firstname.placeholder:Enter your first name`;
-  lastNamePlaceholder = $localize`:@@register.lastname.placeholder:Enter your last name`;
-  emailPlaceholder = $localize`:@@register.email.placeholder:Enter your email`;
-  passwordPlaceholder = $localize`:@@register.password.placeholder:Create a password`;
-  confirmPasswordPlaceholder = $localize`:@@register.confirm.password.placeholder:Confirm your password`;
-  createAccountText = $localize`:@@register.create.account:Create Account`;
-  creatingAccountText = $localize`:@@register.creating.account:Creating Account...`;
+  // Computed Signals
+  readonly buttonText$ = computed(() =>
+    this.isLoading$()
+      ? this.translateService.instant('register.creating.account')
+      : this.translateService.instant('register.create.account')
+  );
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
+  readonly isFormValid$ = computed(() => this.registerForm?.valid || false);
+
+  constructor() {
     this.registerForm = this.fb.group(
       {
         firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -90,7 +96,8 @@ export class RegisterComponent {
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      this.isLoading = true;
+      this.isLoading$.set(true);
+      this.errorMessage$.set(null);
       const formValue = this.registerForm.value;
 
       // Map form values to RegisterData interface
@@ -103,14 +110,14 @@ export class RegisterComponent {
 
       this.authService.register(registerData).subscribe({
         next: (user: User) => {
-          this.isLoading = false;
+          this.isLoading$.set(false);
           console.log('Registration successful', user);
           this.router.navigate(['/dashboard']);
         },
         error: (error: any) => {
-          this.isLoading = false;
+          this.isLoading$.set(false);
+          this.errorMessage$.set(error.message || 'Registration failed');
           console.error('Registration failed', error);
-          // TODO: Show error message to user
         },
       });
     }
@@ -119,10 +126,10 @@ export class RegisterComponent {
   getFirstNameErrorMessage(): string {
     const control = this.registerForm.get('firstName');
     if (control?.hasError('required')) {
-      return $localize`:@@register.firstname.required:First name is required`;
+      return this.translateService.instant('register.firstname.required');
     }
     if (control?.hasError('minlength')) {
-      return $localize`:@@register.firstname.minlength:First name must be at least 2 characters`;
+      return this.translateService.instant('register.firstname.minlength');
     }
     return '';
   }
@@ -130,10 +137,10 @@ export class RegisterComponent {
   getLastNameErrorMessage(): string {
     const control = this.registerForm.get('lastName');
     if (control?.hasError('required')) {
-      return $localize`:@@register.lastname.required:Last name is required`;
+      return this.translateService.instant('register.lastname.required');
     }
     if (control?.hasError('minlength')) {
-      return $localize`:@@register.lastname.minlength:Last name must be at least 2 characters`;
+      return this.translateService.instant('register.lastname.minlength');
     }
     return '';
   }
@@ -141,10 +148,10 @@ export class RegisterComponent {
   getEmailErrorMessage(): string {
     const control = this.registerForm.get('email');
     if (control?.hasError('required')) {
-      return $localize`:@@register.email.required:Email is required`;
+      return this.translateService.instant('register.email.required');
     }
     if (control?.hasError('email')) {
-      return $localize`:@@register.email.invalid:Please enter a valid email`;
+      return this.translateService.instant('register.email.invalid');
     }
     return '';
   }
@@ -152,10 +159,10 @@ export class RegisterComponent {
   getPasswordErrorMessage(): string {
     const control = this.registerForm.get('password');
     if (control?.hasError('required')) {
-      return $localize`:@@register.password.required:Password is required`;
+      return this.translateService.instant('register.password.required');
     }
     if (control?.hasError('minlength')) {
-      return $localize`:@@register.password.minlength:Password must be at least 6 characters`;
+      return this.translateService.instant('register.password.minlength');
     }
     return '';
   }
@@ -163,11 +170,23 @@ export class RegisterComponent {
   getConfirmPasswordErrorMessage(): string {
     const control = this.registerForm.get('confirmPassword');
     if (control?.hasError('required')) {
-      return $localize`:@@register.confirm.password.required:Please confirm your password`;
+      return this.translateService.instant(
+        'register.confirm.password.required'
+      );
     }
     if (control?.hasError('passwordMismatch')) {
-      return $localize`:@@register.confirm.password.mismatch:Passwords do not match`;
+      return this.translateService.instant(
+        'register.confirm.password.mismatch'
+      );
     }
     return '';
+  }
+
+  togglePasswordVisibility(): void {
+    this.hidePassword$.update((value: boolean) => !value);
+  }
+
+  toggleConfirmPasswordVisibility(): void {
+    this.hideConfirmPassword$.update((value: boolean) => !value);
   }
 }

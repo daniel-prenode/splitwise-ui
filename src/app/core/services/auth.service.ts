@@ -1,11 +1,13 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
   computed,
+  inject,
   Injectable,
   signal,
   Signal,
   WritableSignal,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
@@ -46,6 +48,8 @@ export interface AuthResponse {
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly http = inject(HttpClient);
+  private readonly router = inject(Router);
   private readonly API_URL = environment.apiUrl;
   private readonly TOKEN_KEY = 'authToken';
   private readonly USER_KEY = 'currentUser';
@@ -68,7 +72,7 @@ export class AuthService {
     }
   });
 
-  constructor(private http: HttpClient) {
+  constructor() {
     // Check if user is already logged in from localStorage
     const savedUser = localStorage.getItem(this.USER_KEY);
     const savedToken = localStorage.getItem(this.TOKEN_KEY);
@@ -115,9 +119,36 @@ export class AuthService {
   }
 
   logout(): void {
-    this._currentUser$.set(null);
-    localStorage.removeItem(this.USER_KEY);
-    localStorage.removeItem(this.TOKEN_KEY);
+    this.http
+      .post<ApiResponse<AuthResponse>>(
+        `${this.API_URL}/auth/logout`,
+        this.currentUser$()
+      )
+      .pipe(
+        map((response) => {
+          if (response.success && response.data) {
+            const { user, token } = response.data;
+            this.setAuthData(user, token);
+            return user;
+          }
+          throw new Error(response.message || 'Login failed');
+        }),
+        catchError(this.handleError)
+      )
+      .subscribe({
+        next: () => {
+          this._currentUser$.set(null);
+          localStorage.removeItem(this.USER_KEY);
+          localStorage.removeItem(this.TOKEN_KEY);
+          this.router.navigate(['/login']);
+        },
+        error: () => {
+          this._currentUser$.set(null);
+          localStorage.removeItem(this.USER_KEY);
+          localStorage.removeItem(this.TOKEN_KEY);
+          this.router.navigate(['/login']);
+        },
+      });
   }
 
   getCurrentUser(): User | null {

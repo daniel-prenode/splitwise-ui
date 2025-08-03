@@ -113,7 +113,18 @@
       "total": "Total expenses"
     }
   },
+  "toolbar": {
+    "welcome": "Welcome",
+    "logout": "Logout",
+    "settings": "Settings",
+    "home": "Home"
+  },
   "common": {
-    "currency": "$0.00"
+    "currency": "$0.00",
+    "language": "Language",
+    "languages": {
+      "english": "English",
+      "german": "Deutsch"
+    }
   }
 }

@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { inject, Injectable, signal, Signal } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface Language {
   code: string;
@@ -8,18 +8,19 @@ export interface Language {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LanguageService {
   private readonly STORAGE_KEY = 'selected-language';
-  private readonly DEFAULT_LANGUAGE = 'en';
+  private readonly DEFAULT_LANGUAGE = 'de';
+  private translateService = inject(TranslateService);
 
-  private currentLanguageSubject = new BehaviorSubject<string>(this.getInitialLanguage());
-  public currentLanguage$: Observable<string> = this.currentLanguageSubject.asObservable();
+  private currentLanguage$ = signal<string>(this.getInitialLanguage());
+  public currentLanguage: Signal<string> = this.currentLanguage$.asReadonly();
 
   private readonly availableLanguages: Language[] = [
     { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'de', name: 'Deutsch', flag: '🇩🇪' }
+    { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
   ];
 
   constructor() {
@@ -45,20 +46,17 @@ export class LanguageService {
   }
 
   getCurrentLanguage(): string {
-    return this.currentLanguageSubject.value;
+    return this.currentLanguage$();
   }
 
   setLanguage(languageCode: string): void {
     if (this.isLanguageSupported(languageCode)) {
-      this.currentLanguageSubject.next(languageCode);
+      this.currentLanguage$.set(languageCode);
       localStorage.setItem(this.STORAGE_KEY, languageCode);
+      // Use ngx-translate to change the language
+      this.translateService.use(languageCode);
 
-      // For production, you would typically reload the app or use Angular's LOCALE_ID
-      // For now, we'll just store the preference
       console.log(`Language changed to: ${languageCode}`);
-
-      // In a real app, you might want to reload the page with the new locale
-      // window.location.reload();
     }
   }
 
@@ -67,18 +65,18 @@ export class LanguageService {
   }
 
   private isLanguageSupported(languageCode: string): boolean {
-    return this.availableLanguages.some(lang => lang.code === languageCode);
+    return this.availableLanguages?.some((lang) => lang.code === languageCode);
   }
 
   // Get language display name
   getLanguageName(code: string): string {
-    const language = this.availableLanguages.find(lang => lang.code === code);
+    const language = this.availableLanguages.find((lang) => lang.code === code);
     return language ? language.name : this.DEFAULT_LANGUAGE;
   }
 
   // Get language flag emoji
   getLanguageFlag(code: string): string {
-    const language = this.availableLanguages.find(lang => lang.code === code);
+    const language = this.availableLanguages.find((lang) => lang.code === code);
     return language ? language.flag : '🇺🇸';
   }
 }

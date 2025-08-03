@@ -113,7 +113,18 @@
       "total": "Gesamtausgaben"
     }
   },
+  "toolbar": {
+    "welcome": "Willkommen",
+    "logout": "Abmelden",
+    "settings": "Einstellungen",
+    "Home": "Dashboard"
+  },
   "common": {
-    "currency": "0,00 €"
+    "currency": "0,00 €",
+    "language": "Sprache",
+    "languages": {
+      "english": "English",
+      "german": "Deutsch"
+    }
   }
 }

@@ -1,0 +1,136 @@
+<div class="dashboard-container">
+  <app-toolbar> </app-toolbar>
+
+  <div class="main-content container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10">
+        <div class="welcome-section mb-4">
+          <h1 class="display-6 fw-bold text-primary mb-3">
+            {{ i18nPrefix + 'welcome.title' | translate }}
+          </h1>
+          <p class="lead text-muted">
+            {{ i18nPrefix + 'welcome.subtitle' | translate }}
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4">
+            <mat-card class="feature-card h-100">
+              <mat-card-header>
+                <mat-icon mat-card-avatar class="feature-icon">group</mat-icon>
+                <mat-card-title>{{
+                  i18nPrefix + 'groups.title' | translate
+                }}</mat-card-title>
+                <mat-card-subtitle>{{
+                  i18nPrefix + 'groups.subtitle' | translate
+                }}</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <p>{{ i18nPrefix + 'groups.description' | translate }}</p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-raised-button color="primary">
+                  {{ i18nPrefix + 'groups.button' | translate }}
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <mat-card class="feature-card h-100">
+              <mat-card-header>
+                <mat-icon mat-card-avatar class="feature-icon"
+                  >receipt</mat-icon
+                >
+                <mat-card-title>{{
+                  i18nPrefix + 'expenses.title' | translate
+                }}</mat-card-title>
+                <mat-card-subtitle>{{
+                  i18nPrefix + 'expenses.subtitle' | translate
+                }}</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <p>{{ i18nPrefix + 'expenses.description' | translate }}</p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-raised-button color="primary">
+                  {{ i18nPrefix + 'expenses.button' | translate }}
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <mat-card class="feature-card h-100">
+              <mat-card-header>
+                <mat-icon mat-card-avatar class="feature-icon"
+                  >account_balance_wallet</mat-icon
+                >
+                <mat-card-title>{{
+                  i18nPrefix + 'balances.title' | translate
+                }}</mat-card-title>
+                <mat-card-subtitle>{{
+                  i18nPrefix + 'balances.subtitle' | translate
+                }}</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <p>{{ i18nPrefix + 'balances.description' | translate }}</p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-raised-button color="primary">
+                  {{ i18nPrefix + 'balances.button' | translate }}
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+
+        <div class="row mt-5">
+          <div class="col-12">
+            <mat-card class="summary-card">
+              <mat-card-header>
+                <mat-card-title>{{
+                  i18nPrefix + 'summary.title' | translate
+                }}</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="row text-center">
+                  <div class="col-md-4">
+                    <div class="summary-item">
+                      <h3 class="text-success">
+                        {{ 'common.currency' | translate }}
+                      </h3>
+                      <p class="text-muted">
+                        {{ i18nPrefix + 'summary.owed' | translate }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="summary-item">
+                      <h3 class="text-danger">
+                        {{ 'common.currency' | translate }}
+                      </h3>
+                      <p class="text-muted">
+                        {{ i18nPrefix + 'summary.owe' | translate }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="summary-item">
+                      <h3 class="text-primary">
+                        {{ 'common.currency' | translate }}
+                      </h3>
+                      <p class="text-muted">
+                        {{ i18nPrefix + 'summary.total' | translate }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

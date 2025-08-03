@@ -1,0 +1,35 @@
+<mat-toolbar color="primary" class="top-toolbar">
+  <div (click)="onHome()" class="d-flex">
+    <button mat-icon-button [matTooltip]="i18nPrefix + 'home' | translate">
+      <mat-icon>home</mat-icon>
+    </button>
+    <div
+      class="user-info me-3 d-flex align-items-center"
+      *ngIf="currentUser$()"
+    >
+      <span
+        >{{ i18nPrefix + 'welcome' | translate }}
+        {{ currentUser$()?.firstName }}</span
+      >
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <!-- User Info mit Avatar -->
+
+  <button
+    mat-icon-button
+    (click)="onSettings()"
+    [matTooltip]="i18nPrefix + 'settings' | translate"
+  >
+    <mat-icon>settings</mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    (click)="onLogout()"
+    [matTooltip]="i18nPrefix + 'logout' | translate"
+  >
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
